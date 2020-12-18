@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Favorite Books</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+</head>
+<body>
+    <div id="wrapper">
+        <div id="header">
+            <h1>Welcome, <a href="/user/{{request.session.user_id}}">{{request.session.user_name}}</a>!</h1>
+            <a href="/logout">Log Out</a>
+        </div>
+        <div id="main_content">
+            <div class="split">
+                <h1>Add a Favorite Book</h1>
+                <form action="/create_book" method="POST">
+                {% csrf_token %}
+                <table>
+                    <tr>
+                        <td>Title</td>
+                        <td><input type="text" name="title"></td>
+                    </tr>
+                    <tr>
+                        <td>Description</td>
+                        <td><input type="text" name="desc"></td>
+                    </tr>
+                </table>
+                <input type="submit" value="Add">
+                </form>
+            </div>
+            <div class="split">
+                <h1>All Books</h1>
+                {% for book in all_books %}
+                <table>
+                    <tr>
+                        <td><a href="/books/{{book.id}}">{{ book.title }}</a></td>
+                    </tr>
+                    <tr>
+                        <td>(added by {{ book.uploaded_by.f_name }} {{ book.uploaded_by.l_name }})</td>
+                    </tr>
+                    {% if current_user in book.users_who_like.all %}
+                    <tr>
+                        <td>this is one of your favorites</td>
+                    </tr>
+                    {% else %}
+                    <tr>
+                        <td><a href="/books/{{book.id}}/favorite">Add to Favorites</a></td>
+                    </tr>
+                    {% endif %}
+                </table>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</body>
+</html>

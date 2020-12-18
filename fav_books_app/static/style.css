@@ -1,0 +1,25 @@
+* {
+    font-family: "Comic Sans MS", cursive, sans-serif;
+}
+#header {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: solid 1px black;
+}
+.split{
+    display: inline-block;
+    vertical-align: top;
+    margin-top: 10px;
+    width: 600px;
+    padding: 10px
+}
+.split:first-of-type{
+    margin-right: 25px;
+}
+.split>table{
+    margin-bottom: 15px;
+}
+.split>form{
+    margin-top: 20px;
+    margin-right: 25px;
+}
